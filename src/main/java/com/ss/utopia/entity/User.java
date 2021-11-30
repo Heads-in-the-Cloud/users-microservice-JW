@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
@@ -25,7 +26,9 @@ public class User {
 	
 	private String given_name;
 	private String family_name;
+	@Column 
 	private String username;
+	@Column
 	private String password;
 	private String email;
 	private String phone;

@@ -1,13 +1,11 @@
 package com.ss.utopia.service;
 
-import java.sql.SQLException;
-import java.util.Collection;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.stereotype.Service;
 
 import com.ss.utopia.entity.User;
@@ -28,6 +26,9 @@ public class UserService {
 		return userRepo.findAll();
 	}
 	
+	public User getUserByUsername(String username) {
+		return userRepo.findByUsername(username);
+	}
 	public ResponseEntity<User> getUserById(Integer id){
 		Optional<User>user = userRepo.findById(id);
 		if(user.isEmpty()) {
