@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,9 +20,16 @@ import com.ss.utopia.service.JWTUserDetailService;
 
 import io.jsonwebtoken.ExpiredJwtException;
 
+import com.ss.utopia.dao.UserRepository;
+import com.ss.utopia.entity.User;
+import com.ss.utopia.entity.UserRole;
+
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
+	@Autowired
+	UserRepository userRepo;
+	
 	@Autowired
 	private JWTUserDetailService jwtUserDetailsService;
 
@@ -37,9 +45,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		
 		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
 			jwtToken = requestTokenHeader.substring(7);
-			try {
-				
+			try {	
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+				User userRoleCheck = userRepo.findByUsername(username);
+				if(userRoleCheck.getRole_id() != 1) {
+					response.setStatus(HttpStatus.FORBIDDEN.value());
+					return;
+				}
 			} catch (IllegalArgumentException e) {
 				System.out.println("Unable to get JWT Token");
 			} catch (ExpiredJwtException e) {
@@ -49,14 +61,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			//will prompt this on the ones that are permitted as well, can ignore there.
 			logger.warn("JWT Token does not begin with Bearer String");
 		}
-
 		// Once we get the token validate it.
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
 			UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
 
-			// if token is valid configure Spring Security to manually set
-			// authentication
 			if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
 
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
