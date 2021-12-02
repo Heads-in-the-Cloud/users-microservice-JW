@@ -3,6 +3,7 @@ package com.ss.utopia.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,9 +19,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -72,8 +76,14 @@ public class UserController {
 	}
 	
 	@GetMapping("/verify")
-	public @ResponseBody ResponseEntity<String> getUserFromToken() {
-		return ResponseEntity.status(HttpStatus.OK).body("Ok");
+	public @ResponseBody ResponseEntity<List <Integer>> getUserFromToken(@RequestHeader HttpHeaders headers) {
+		String token = headers.getFirst(HttpHeaders.AUTHORIZATION).substring(7);
+		Integer role = userService.getUserByUsername(jwtTokenUtil.getUsernameFromToken(token)).getRole_id();
+		Integer id = userService.getUserByUsername(jwtTokenUtil.getUsernameFromToken(token)).getId();
+		List <Integer> roleID = new ArrayList <Integer>();
+		roleID.add(role);
+		roleID.add(id);
+		return ResponseEntity.status(HttpStatus.OK).body(roleID);
 //		return userService.getUserByUsername(jwtTokenUtil.getUsernameFromToken(token));
 	}
 	

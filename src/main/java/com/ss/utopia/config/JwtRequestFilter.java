@@ -48,7 +48,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			try {	
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
 				User userRoleCheck = userRepo.findByUsername(username);
-				if(userRoleCheck.getRole_id() != 1) {
+				if(userRoleCheck.getRole_id() != 1 && !request.getRequestURI().equals("/user/verify")) {
 					response.setStatus(HttpStatus.FORBIDDEN.value());
 					return;
 				}
