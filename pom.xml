@@ -11,7 +11,7 @@
 	<groupId>com.ss</groupId>
 	<artifactId>utopia</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>utopia</name>
 	<description>Utopia User microservice</description>
 	<properties>
