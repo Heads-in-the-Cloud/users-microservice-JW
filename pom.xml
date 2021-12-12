@@ -16,6 +16,7 @@
 	<description>Utopia User microservice</description>
 	<properties>
 		<java.version>11</java.version>
+		<start-class>com.ss.utopia.UsersApplication</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
