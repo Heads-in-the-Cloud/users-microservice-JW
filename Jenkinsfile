@@ -17,10 +17,6 @@ pipeline {
         stage('build') {
             steps {
                 echo "hello"
-            }
-        }
-        stage ('Build') {
-            steps {
                 sh 'mvn package' 
             }
         }
