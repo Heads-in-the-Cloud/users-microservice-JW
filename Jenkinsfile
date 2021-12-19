@@ -6,18 +6,22 @@ pipeline {
     //     jdk 'jdk8' 
     // }
     stages {
-        stage ('Initialize') {
+        stage('Docker build') {
             steps {
-                sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                ''' 
+                echo 'Building image:'
+                sh 'docker build -t userimage .'
             }
         }
-        stage('build') {
-            steps {
-                echo "hello"
-                sh 'mvn package' 
+        stage('Tag Image'){
+            steps{
+                echo 'Tagging image: '
+                sh 'docker tag userimage jswen19109814/user:user'
+            }
+        }
+        stage('Push Image'){
+            steps{
+                echo 'Pushing image: '
+                sh 'docker push jswen19109814/user:user'
             }
         }
     }
