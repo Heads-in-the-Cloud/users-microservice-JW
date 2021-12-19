@@ -1,10 +1,10 @@
 pipeline {
     // agent { docker { image 'maven:3.8.4-openjdk-11-slim' } }
     agent any
-    tools { 
-        maven 'Maven 3.3.9' 
-        jdk 'jdk8' 
-    }
+    // tools { 
+    //     maven 'Maven 3.3.9' 
+    //     jdk 'jdk8' 
+    // }
     stages {
         stage ('Initialize') {
             steps {
