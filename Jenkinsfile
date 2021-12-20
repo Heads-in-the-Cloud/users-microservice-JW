@@ -8,6 +8,7 @@ pipeline {
     stages {
         stage('Docker build') {
             steps {
+                sh 'mvn package'
                 echo 'Building image:'
                 echo "PATH = ${PATH}"
                 echo "M2_HOME = ${M2_HOME}"
