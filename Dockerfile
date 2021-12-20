@@ -5,7 +5,7 @@ RUN mvn package
 RUN pwd
 RUN ls -l
 
-FROM openjdk:11-jre-slim
+# FROM openjdk:11-jre-slim
 RUN cd root 
 ARG JAR_FILE=target/*.jar
 RUN pwd
