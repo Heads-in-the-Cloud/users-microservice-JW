@@ -32,7 +32,7 @@ pipeline {
                 echo 'Pushing image:'
                 script{
                     docker.withRegistry('', 'jwdockerhub'){
-                        dockerimage.push()
+                        userimage.push()
                     }
                 }
             }
