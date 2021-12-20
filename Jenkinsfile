@@ -1,10 +1,16 @@
 pipeline {
     // agent { docker { image 'maven:3.8.4-openjdk-11-slim' } }
     agent any
+    tools { 
+        maven 'mvn' 
+        jdk 'java' 
+    }
     stages {
         stage('Docker build') {
             steps {
                 echo 'Building image:'
+                echo "PATH = ${PATH}"
+                echo "M2_HOME = ${M2_HOME}"
                 sh 'docker build -t userimage .'
             }
         }

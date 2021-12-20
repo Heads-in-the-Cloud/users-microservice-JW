@@ -1,5 +1,5 @@
 FROM openjdk:11-jre-slim
-RUN mvnw clean install
+FROM 
 RUN mvn package
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
