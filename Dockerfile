@@ -2,6 +2,7 @@ FROM maven:3.6.3-jdk-11
 COPY ./pom.xml ./pom.xml
 COPY ./src ./src
 RUN mvn package
+RUN pwd
 
 FROM openjdk:11-jre-slim
 ARG JAR_FILE=target/*.jar
