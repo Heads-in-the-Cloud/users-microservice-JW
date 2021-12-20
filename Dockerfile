@@ -7,10 +7,9 @@
 
 FROM openjdk:11-jre-slim
 # RUN cd root 
-ARG export JAR_FILE=target/*.jar
+ARG JAR_FILE=target/*.jar
 # RUN pwd
 # RUN ls -l 
-RUN ls -l ./target
-COPY ./target/utopia-0.0.1-SNAPSHOT.jar app.jar
+COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 
