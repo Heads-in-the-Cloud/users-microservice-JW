@@ -1,6 +1,10 @@
 pipeline {
     // agent { docker { image 'maven:3.8.4-openjdk-11-slim' } }
-    agent any
+    environment {
+        registry = "jswen19109814/user"
+        dockerImage = ''
+    }
+        agent any
     tools { 
         maven 'mvn' 
         jdk 'java' 
@@ -8,23 +12,24 @@ pipeline {
     stages {
         stage('Docker build') {
             steps {
+                echo 'Maven packaging:'
                 sh 'mvn package'
                 echo 'Building image:'
-                echo "PATH = ${PATH}"
-                echo "M2_HOME = ${M2_HOME}"
-                sh 'docker build -t userimage .'
+                // sh 'docker build -t userimage .'
+                script{
+                    userimage = docker.build registry + ":user"
+                }  
             }
         }
-        stage('Tag Image'){
-            steps{
-                echo 'Tagging image: '
-                sh 'docker tag userimage jswen19109814/user:user'
-            }
-        }
+        // stage('Tag Image'){
+        //     steps{
+        //         echo 'Tagging image: '
+        //         sh 'docker tag userimage jswen19109814/user:user'
+        //     }
+        // }
         stage('Push Image'){
-            steps{
-                echo 'Pushing image: '
-                sh 'docker push jswen19109814/user:user'
+            docker.withRegistry('https://hub.docker.com/repository/docker/jswen19109814/user', 'jwdockerhub'){
+                dockerimage.push()
             }
         }
     }
