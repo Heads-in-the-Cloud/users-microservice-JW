@@ -31,7 +31,7 @@ pipeline {
             steps{
                 echo 'Pushing image:'
                 script{
-                    docker.withRegistry('https://hub.docker.com/repository/docker/jswen19109814/user', 'jwdockerhub'){
+                    docker.withRegistry('', 'jwdockerhub'){
                         dockerimage.push()
                     }
                 }
