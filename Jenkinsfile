@@ -4,7 +4,7 @@ pipeline {
         registry = "jswen19109814/user"
         dockerImage = ''
     }
-        agent any
+    agent any
     tools { 
         maven 'mvn' 
         jdk 'java' 
@@ -28,8 +28,10 @@ pipeline {
         //     }
         // }
         stage('Push Image'){
-            docker.withRegistry('https://hub.docker.com/repository/docker/jswen19109814/user', 'jwdockerhub'){
-                dockerimage.push()
+            script{
+                docker.withRegistry('https://hub.docker.com/repository/docker/jswen19109814/user', 'jwdockerhub'){
+                    dockerimage.push()
+                }
             }
         }
     }
