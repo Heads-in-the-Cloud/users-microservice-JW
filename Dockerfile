@@ -5,6 +5,8 @@ RUN mvn package
 
 FROM openjdk:11-jre-slim
 ARG JAR_FILE=target/*.jar
+RUN pwd
+RUN ls -l 
 RUN ls -l ./target
 COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
