@@ -15,7 +15,7 @@
 	<name>utopia</name>
 	<description>Utopia User microservice</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>11</java.version>	
 		<ptype>jar</ptype>
 	</properties>
 	<dependencies>
