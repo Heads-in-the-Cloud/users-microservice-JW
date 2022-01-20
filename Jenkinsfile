@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        registry = "jswen19109814/user"
+        registry = "902316339693.dkr.ecr.us-east-2.amazonaws.com/jw-users"
         dockerImage = ''
     }
     agent any
@@ -15,15 +15,15 @@ pipeline {
                 sh 'mvn package'
                 echo 'Building image:'
                 script{
-                    userimage = docker.build registry + ":user"
+                    userimage = docker.build registry + ":userimage"
                 }  
             }
         }
         stage('Push Image'){
             steps{
                 echo 'Pushing image:'
-                script{
-                    docker.withRegistry('', 'jwdockerhub'){
+               script{
+                    docker.withRegistry('https://902316339693.dkr.ecr.us-east-2.amazonaws.com', 'ecr:us-east-2:jw-aws-cred'){
                         userimage.push()
                     }
                 }
