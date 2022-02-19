@@ -9,10 +9,10 @@
 		<version>2.5.5</version>
 	</parent>
 	<groupId>com.ss</groupId>
-	<artifactId>utopia</artifactId>
+	<artifactId>users</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>${ptype}</packaging>
-	<name>utopia</name>
+	<name>users</name>
 	<properties>
 		<java.version>11</java.version>	
 		<ptype>jar</ptype>
