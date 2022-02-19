@@ -9,10 +9,10 @@
 		<version>2.5.5</version>
 	</parent>
 	<groupId>com.ss</groupId>
-	<artifactId>utopia</artifactId>
+	<artifactId>utopia-users-ms</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>${ptype}</packaging>
-	<name>utopia</name>
+	<name>utopia-users-ms</name>
 	<description>Utopia User microservice</description>
 	<properties>
 		<java.version>11</java.version>	
