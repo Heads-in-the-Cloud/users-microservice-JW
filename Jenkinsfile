@@ -22,7 +22,8 @@ pipeline {
         stage('Push Image'){
             steps{
                 echo 'Pushing image:'
-               script{
+                sh 'docker context use default'
+                script{
                     docker.withRegistry('https://902316339693.dkr.ecr.us-east-2.amazonaws.com', 'ecr:us-east-2:jw-aws-cred'){
                         userimage.push()
                     }
