@@ -1,9 +1,11 @@
 pipeline {
+    agent any
     environment {
         registry = "902316339693.dkr.ecr.us-east-2.amazonaws.com/jw-users"
-        dockerImage = ''
     }
-    agent any
+    parameters{
+        string(name:'sonarqubekey', defaultValue: '', description: 'sonarqube key')
+    }
     tools { 
         maven 'mvn' 
         jdk 'java' 
@@ -17,6 +19,11 @@ pipeline {
                 script{
                     userimage = docker.build registry + ":userimage"
                 }  
+            }
+        }
+        stage('Sonarqube check'){
+            steps{
+                sh"mvn verify sonar:sonar -Dsonar.projectKey=jw-sonarqube -Dsonar.host.url=http://jenkins.hitec.link:9000 -Dsonar.login= ${params.sonarqubekey}"
             }
         }
         stage('Push Image'){
