@@ -3,6 +3,9 @@ pipeline {
     environment {
         registry = "902316339693.dkr.ecr.us-east-2.amazonaws.com/jw-users"
     }
+    parameters{
+        string(name:'sonarqubekey', defaultValue: 'NULL', description: 'sonarqube key')
+    }
     tools { 
         maven 'mvn' 
         jdk 'java' 
@@ -20,7 +23,7 @@ pipeline {
         }
         stage('Sonarqube check'){
             steps{
-                sh"mvn verify sonar:sonar -Dsonar.projectKey=users-microservice -Dsonar.host.url=http://jenkins.hitec.link:9000 -Dsonar.login=3c88d5e1d6421ac01a8215540426ae441ee0ff4e"
+                sh"mvn verify sonar:sonar -Dsonar.projectKey=users-microservice -Dsonar.host.url=http://jenkins.hitec.link:9000 -Dsonar.login=${params.sonarqubekey}"
             }
         }
         stage('Push Image'){
