@@ -16,8 +16,12 @@ pipeline {
             steps{
                 withSonarQubeEnv('sonarqube'){
                     sh"mvn verify sonar:sonar -Dsonar.projectKey=bookings-microservice -Dsonar.host.url=http://jenkins.hitec.link:9000 -Dsonar.login=${params.sonarqubekey}"
-                    waitForQualityGate abortPipeline: false
                 }
+            }
+        }
+        stage('Quality gate'){
+            steps{
+                waitForQualityGate abortPipeline: false
             }
         }
         stage('Docker build') {
